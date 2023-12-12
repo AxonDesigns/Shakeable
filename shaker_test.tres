@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Shaker" load_steps=6 format=3 uid="uid://c5i0kdhe0r483"]
+
+[ext_resource type="Script" path="res://addons/shakeable/scripts/shaker.gd" id="1_5unud"]
+[ext_resource type="Script" path="res://addons/shakeable/scripts/composed_shake.gd" id="2_d5n71"]
+[ext_resource type="Script" path="res://addons/shakeable/scripts/noise_shake.gd" id="2_ql4vm"]
+
+[sub_resource type="Resource" id="Resource_1sut2"]
+script = ExtResource("2_ql4vm")
+amplitude = Vector3(0, 0, 0)
+bypass = false
+duration = 1.0
+fade_in_time = 0.0
+fade_out_time = 0.0
+
+[sub_resource type="Resource" id="Resource_7ivnv"]
+script = ExtResource("2_d5n71")
+shakes = Array[Resource("res://addons/shakeable/scripts/shake.gd")]([SubResource("Resource_1sut2")])
+bypass = false
+duration = 1.0
+fade_in_time = 0.0
+fade_out_time = 0.0
+
+[resource]
+script = ExtResource("1_5unud")
+shake = SubResource("Resource_7ivnv")
+oneshot = false

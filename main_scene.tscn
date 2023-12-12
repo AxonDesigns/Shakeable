@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=3 uid="uid://54yklxpksf1p"]
+
+[ext_resource type="Script" path="res://addons/shakeable/scripts/shakeable_node.gd" id="1_6uewd"]
+[ext_resource type="Script" path="res://addons/shakeable/scripts/noise_shake.gd" id="2_ok05s"]
+[ext_resource type="Script" path="res://addons/shakeable/scripts/composed_shake.gd" id="2_twaiy"]
+[ext_resource type="Script" path="res://addons/shakeable/scripts/curve_shake.gd" id="4_maarj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cxhva"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_281d4"]
+frequency = 0.0489
+
+[sub_resource type="Resource" id="Resource_7qiqs"]
+script = ExtResource("2_ok05s")
+noise = SubResource("FastNoiseLite_281d4")
+amplitude = Vector3(0.5, 0, 0)
+random_seed = true
+bypass = true
+oneshot = false
+duration = 1.0
+fade_in_time = 0.0
+fade_out_time = 0.0
+
+[sub_resource type="Curve" id="Curve_o56eb"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.502262, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_bagrj"]
+script = ExtResource("4_maarj")
+x_curve = SubResource("Curve_o56eb")
+bypass = false
+oneshot = false
+duration = 2.5
+fade_in_time = 0.0
+fade_out_time = 0.0
+
+[sub_resource type="Resource" id="Resource_i5j38"]
+script = ExtResource("2_twaiy")
+shakes = Array[Resource("res://addons/shakeable/scripts/shake.gd")]([SubResource("Resource_7qiqs"), SubResource("Resource_bagrj")])
+bypass = false
+oneshot = false
+duration = 1.0
+fade_in_time = 0.0
+fade_out_time = 0.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5971, 0, 0)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5971, 3, -4)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5971, 3, 4)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5971, -3, -4)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5971, -3, 4)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.59713, 3, -6)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.59713, 3, 6)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.59713, -3, -6)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.59713, -3, 6)
+mesh = SubResource("BoxMesh_cxhva")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+current = true
+
+[node name="ShakeableNode" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_6uewd")
+shake = SubResource("Resource_i5j38")
+target = NodePath("../Camera3D")
